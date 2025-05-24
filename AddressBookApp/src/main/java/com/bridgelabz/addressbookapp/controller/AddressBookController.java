@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -45,16 +46,14 @@ public class AddressBookController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AddressBookData> createContact(@RequestBody AddressBookDTO dto) {
-        LOGGER.info("POST /addressbook/create - Creating contact: {}", dto);
-        AddressBookData newContact = addressBookService.createAddressBookData(dto);
+    public ResponseEntity<AddressBookData> createContact(@Valid @RequestBody AddressBookDTO dto) {
+        AddressBookData newContact = addressBookService.createContact(dto);
         return ResponseEntity.ok(newContact);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AddressBookData> updateContact(@PathVariable int id, @RequestBody AddressBookDTO dto) {
-        LOGGER.info("PUT /addressbook/update/{} - Updating contact with data: {}", id, dto);
-        AddressBookData updatedContact = addressBookService.updateAddressBookData(id, dto);
+    public ResponseEntity<AddressBookData> updateContact(@PathVariable int id, @Valid @RequestBody AddressBookDTO dto) {
+        AddressBookData updatedContact = addressBookService.updateContact(id, dto);
         return ResponseEntity.ok(updatedContact);
     }
 
