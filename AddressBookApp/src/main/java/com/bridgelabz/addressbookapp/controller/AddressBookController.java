@@ -27,41 +27,31 @@ public class AddressBookController {
 
     @GetMapping("/get")
     public ResponseEntity<List<AddressBookData>> getAllContacts() {
-        List<AddressBookData> contacts = addressBookService.getAllContacts();
+        List<AddressBookData> contacts = addressBookService.getAllAddressBookData();
         return ResponseEntity.ok(contacts);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<AddressBookData> getContactById(@PathVariable int id) {
-        AddressBookData contact = addressBookService.getContactById(id);
-        if (contact == null) {
-            return ResponseEntity.notFound().build();
-        }
+        AddressBookData contact = addressBookService.getAddressBookDataById(id);
         return ResponseEntity.ok(contact);
     }
 
     @PostMapping("/create")
     public ResponseEntity<AddressBookData> createContact(@RequestBody AddressBookDTO dto) {
-        AddressBookData newContact = addressBookService.createContact(dto);
+        AddressBookData newContact = addressBookService.createAddressBookData(dto);
         return ResponseEntity.ok(newContact);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<AddressBookData> updateContact(@PathVariable int id, @RequestBody AddressBookDTO dto) {
-        AddressBookData updatedContact = addressBookService.updateContact(id, dto);
-        if (updatedContact == null) {
-            return ResponseEntity.notFound().build();
-        }
+        AddressBookData updatedContact = addressBookService.updateAddressBookData(id, dto);
         return ResponseEntity.ok(updatedContact);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteContact(@PathVariable int id) {
-        AddressBookData existingContact = addressBookService.getContactById(id);
-        if (existingContact == null) {
-            return ResponseEntity.notFound().build();
-        }
-        addressBookService.deleteContact(id);
+        addressBookService.deleteAddressBookData(id);
         return ResponseEntity.ok("Contact deleted with id: " + id);
     }
 }

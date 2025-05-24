@@ -6,9 +6,14 @@ import com.bridgelabz.addressbookapp.model.AddressBookData;
 import java.util.List;
 
 public interface IAddressBookService {
-    List<AddressBookData> getAllContacts();
-    AddressBookData getContactById(int id);
-    AddressBookData createContact(AddressBookDTO addressBookDTO);
-    AddressBookData updateContact(int id, AddressBookDTO addressBookDTO);
-    void deleteContact(int id);
+
+    AddressBookData createAddressBookData(AddressBookDTO addressBookDTO);
+
+    AddressBookData updateAddressBookData(int id, AddressBookDTO addressBookDTO);
+
+    AddressBookData getAddressBookDataById(int id);
+
+    List<AddressBookData> getAllAddressBookData();
+
+    void deleteAddressBookData(int id);
 }
