@@ -7,33 +7,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/addressbook")
 public class AddressBookController {
 
-    @GetMapping("/")
-    public ResponseEntity<String> getWelcomeMessage() {
-        return ResponseEntity.ok("Welcome to Address Book App!");
-    }
+	@Autowired
+	private IAddressBookService addressBookService;
 
-    @GetMapping("/get")
-    public ResponseEntity<String> getAddressBookData() {
-        return ResponseEntity.ok("GET Request Success");
-    }
+	@GetMapping("/get")
+	public ResponseEntity<List<AddressBookData>> getAllContacts() {
+	    return ResponseEntity.ok(addressBookService.getAllContacts());
+	}
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<String> getAddressById(@PathVariable int id) {
-        return ResponseEntity.ok("GET by ID Success: " + id);
-    }
+	@GetMapping("/get/{id}")
+	public ResponseEntity<AddressBookData> getContactById(@PathVariable int id) {
+	    return ResponseEntity.ok(addressBookService.getContactById(id));
+	}
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createAddress(@RequestBody String addressData) {
-        return ResponseEntity.ok("POST Request Success: " + addressData);
-    }
+	@PostMapping("/create")
+	public ResponseEntity<AddressBookData> createContact(@RequestBody AddressBookDTO dto) {
+	    return ResponseEntity.ok(addressBookService.createContact(dto));
+	}
 
-    @PutMapping("/update")
-    public ResponseEntity<String> updateAddress(@RequestBody String addressData) {
-        return ResponseEntity.ok("PUT Request Success: " + addressData);
-    }
+	@PutMapping("/update/{id}")
+	public ResponseEntity<AddressBookData> updateContact(@PathVariable int id, @RequestBody AddressBookDTO dto) {
+	    return ResponseEntity.ok(addressBookService.updateContact(id, dto));
+	}
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAddress(@PathVariable int id) {
-        return ResponseEntity.ok("DELETE Request Success: " + id);
-    }
-}
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteContact(@PathVariable int id) {
+	    addressBookService.deleteContact(id);
+	    return ResponseEntity.ok("Deleted contact with id: " + id);
+	}
