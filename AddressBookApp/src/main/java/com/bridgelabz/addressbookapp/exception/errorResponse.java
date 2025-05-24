@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 
 public class ErrorResponse {
     private LocalDateTime timestamp;
-    private String message;
-    private String details;
+    private String error;     // Changed from 'message' to 'error' for error type/title
+    private String details;   // Detailed message, e.g. validation or exception message
 
-    public ErrorResponse(LocalDateTime timestamp, String message, String details) {
+    public ErrorResponse(LocalDateTime timestamp, String error, String details) {
         this.timestamp = timestamp;
-        this.message = message;
+        this.error = error;
         this.details = details;
     }
 
@@ -17,8 +17,8 @@ public class ErrorResponse {
         return timestamp;
     }
 
-    public String getMessage() {
-        return message;
+    public String getError() {
+        return error;
     }
 
     public String getDetails() {

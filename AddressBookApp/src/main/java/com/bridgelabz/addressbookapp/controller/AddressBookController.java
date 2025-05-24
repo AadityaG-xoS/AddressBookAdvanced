@@ -1,6 +1,7 @@
 package com.bridgelabz.addressbookapp.controller;
 
 import com.bridgelabz.addressbookapp.dto.AddressBookDTO;
+import com.bridgelabz.addressbookapp.exception.AddressBookException;
 import com.bridgelabz.addressbookapp.model.AddressBookData;
 import com.bridgelabz.addressbookapp.service.IAddressBookService;
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ public class AddressBookController {
     @GetMapping("/get/{id}")
     public ResponseEntity<AddressBookData> getContactById(@PathVariable int id) {
         LOGGER.info("GET /addressbook/get/{} - Fetching contact by ID.", id);
+        // This might throw AddressBookException if not found
         AddressBookData contact = addressBookService.getAddressBookDataById(id);
         return ResponseEntity.ok(contact);
     }
@@ -53,6 +55,7 @@ public class AddressBookController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<AddressBookData> updateContact(@PathVariable int id, @Valid @RequestBody AddressBookDTO dto) {
+        // This might throw AddressBookException if not found
         AddressBookData updatedContact = addressBookService.updateContact(id, dto);
         return ResponseEntity.ok(updatedContact);
     }
@@ -60,6 +63,7 @@ public class AddressBookController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteContact(@PathVariable int id) {
         LOGGER.info("DELETE /addressbook/delete/{} - Deleting contact.", id);
+        // This might throw AddressBookException if not found
         addressBookService.deleteAddressBookData(id);
         return ResponseEntity.ok("Contact deleted with id: " + id);
     }
