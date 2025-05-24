@@ -1,5 +1,5 @@
 package com.bridgelabz.addressbookapp.service;
-
+import com.bridgelabz.addressbookapp.exception.AddressBookException;
 import com.bridgelabz.addressbookapp.dto.AddressBookDTO;
 import com.bridgelabz.addressbookapp.model.AddressBookData;
 import com.bridgelabz.addressbookapp.repository.AddressBookRepository;
@@ -33,6 +33,8 @@ public class AddressBookService implements IAddressBookService {
         LOGGER.info("Fetching contact by ID: {}", id);
         return addressBookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contact not found for ID: " + id));
+        return addressBookRepository.findById(id)
+                .orElseThrow(() -> new AddressBookException("Contact not found for ID: " + id));
     }
 
     @Override
